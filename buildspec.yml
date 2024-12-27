@@ -1,17 +1,18 @@
 version: 0.2
-
 phases:
   install:
     runtime-versions:
       java: corretto8
   pre_build:
     commands:
-      - echo Initializing environment
-      - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain nextwork-packages --domain-owner 897729115606 --query authorizationToken --output text`
+      - echo "Fetching authorization token"
+      - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain nextwork --domain-owner 897729115606 --query authorizationToken --output text)
+      - echo "Token: $CODEARTIFACT_AUTH_TOKEN"
+      - echo "Maven repository URL: https://nextwork-897729115606.d.codeartifact.ap-south-1.amazonaws.com/maven/nextwork-packages/"
   build:
     commands:
       - echo Build started on `date`
-      - mvn -s settings.xml compile
+      - mvn -X -s settings.xml compile
   post_build:
     commands:
       - echo Build completed on `date`
