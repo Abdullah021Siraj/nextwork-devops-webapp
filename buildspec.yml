@@ -1,4 +1,5 @@
 version: 0.2
+
 phases:
   install:
     runtime-versions:
@@ -11,12 +12,13 @@ phases:
       - echo "Maven repository URL: https://nextwork-897729115606.d.codeartifact.ap-south-1.amazonaws.com/maven/nextwork-packages/"
   build:
     commands:
-      - echo Build started on `date`
+      - echo "Build started on `date`"
       - mvn -X -s settings.xml compile
   post_build:
     commands:
-      - echo Build completed on `date`
+      - echo "Build completed on `date`"
       - mvn -s settings.xml package
+
 artifacts:
   files:
     - target/nextwork-web-project.war
